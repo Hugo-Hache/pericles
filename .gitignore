@@ -37,5 +37,5 @@ yarn-debug.log*
 yarn-error.log*
 .yarn-integrity
 
-docker-compose.yml
+./docker-compose.yml
 .idea

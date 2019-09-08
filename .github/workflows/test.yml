@@ -5,4 +5,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
-    - uses: ./.github/action-test
+    - name: Build the stack
+      run: |
+        cd .github/action-test
+        docker-compose up -d
+    - name: Test
+      run: |
+        cd .github/action-test
+        docker-compose run ruby bundle exec rails test
