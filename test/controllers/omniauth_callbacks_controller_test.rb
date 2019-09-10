@@ -6,6 +6,7 @@ class OmniauthCallbacksControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'redirect if user is found' do
+    skip unless defined? user_google_oauth2_omniauth_callback_path
     User.stub :from_omniauth, create(:user) do
       post user_google_oauth2_omniauth_callback_path
       assert_redirected_to root_path
@@ -13,6 +14,7 @@ class OmniauthCallbacksControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'redirect to new_session if user is not found' do
+    skip unless defined? user_google_oauth2_omniauth_callback_path
     User.stub :from_omniauth, nil do
       post user_google_oauth2_omniauth_callback_path
       assert_redirected_to new_user_session_path

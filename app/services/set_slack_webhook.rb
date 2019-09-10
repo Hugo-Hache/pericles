@@ -5,8 +5,8 @@ class SetSlackWebhook
 
   def execute(code, redirect_uri)
     form = {
-      client_id: Rails.application.secrets.slack[:client_id],
-      client_secret: Rails.application.secrets.slack[:client_secret],
+      client_id: Rails.application.secrets.dig(:slack, :client_id),
+      client_secret: Rails.application.secrets.dig(:slack, :client_secret),
       code: code,
       redirect_uri: redirect_uri
     }
