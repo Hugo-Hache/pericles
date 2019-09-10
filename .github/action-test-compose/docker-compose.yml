@@ -4,7 +4,7 @@ services:
     container_name: ruby
     build:
       context: ../../.
-      dockerfile: .github/action-test/Dockerfile
+      dockerfile: .github/action-test-compose/Dockerfile
     depends_on:
       - postgres
     environment:

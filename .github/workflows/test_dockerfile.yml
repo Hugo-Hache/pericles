@@ -1,0 +1,10 @@
+name: Test dockerfile
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - uses: ./.github/action-test-dockerfile
+      env:
+        DATABASE_URL: postgres://pericles@postgres/pericles
