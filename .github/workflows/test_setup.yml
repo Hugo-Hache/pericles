@@ -1,0 +1,35 @@
+name: Test setup
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Set up Ruby 2.6
+      uses: actions/setup-ruby@v1
+      with:
+        ruby-version: 2.6.3
+    - name: Set up yarn 2.6
+      uses: actions/setup-node@v1
+      with:
+        node-version: 10.13.x
+        registry-url: https://registry.npmjs.org/
+    - name: Set up postgresql
+      run: |
+        sudo apt-get install -y postgresql postgresql-contrib libpq-dev
+        sudo -u postgres createuser -s pericles --no-password
+        sudo -u postgres psql -c "ALTER USER pericles WITH PASSWORD 'password';"
+        sudo -u postgres createdb pericles -O pericles
+    - name: Install Ruby deps
+      run: |
+        gem install bundler
+        bundle install
+    - name: Install JS deps
+      run: yarn install
+    - name: Test
+      run: |
+        bundle exec rails db:schema:load
+        bundle exec rails test
+      env:
+        RAILS_ENV: test
+        DATABASE_URL: postgres://pericles:password@localhost/pericles
